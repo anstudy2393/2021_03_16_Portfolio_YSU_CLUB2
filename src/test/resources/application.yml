@@ -1,0 +1,20 @@
+spring:
+# 별도의 설정이 없으면 메모리 모드로 돌리기 때문에 동일
+#  datasource:
+#    url: jdbc:h2:mem:test
+#    username: sa
+#    password:
+#    driver-`class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create # 자동으로 탭을 만들어주는 모드
+#    properties: # hibernate와 관련된 특정한 프로퍼티들을 사용 가능
+#      hibernate:
+##       show_sql: true
+#        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug # jpa나 hibernate가 생성하는 sql문이 다 보이게함
+    org.hibernate.type: trace

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div th:replace="fragments/navbar :: navbar"/>
+<div class="container-fluid" th:if="${getJoinClubList.size()}!=0">
+    <div class="row">
+        <div th:replace="fragments/sidebar :: sidebar"/>
+        <div class="col-md-10">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>회원명</th>
+                    <th>동아리 이름</th>
+                    <th>동아리 신청상태</th>
+                    <th>신청 취소</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="joinClub : ${joinClubList}">
+                    <td th:text="${joinClub.id}"></td>
+                    <td th:text="${joinClub.join.getMember().getName()}"></td>
+                    <td th:text="${joinClub.club.getName()}"></td>
+                    <td th:text="${joinClub.join.getMember().getStatus()}"></td>
+                    <td>
+                        <a th:if="${joinClub.join.status.name() == 'apply'}" href="#"
+                           th:href="'javascript:cancel('+${joinClub.join.id}+')'"
+                           class="btn btn-danger">CANCEL</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <nav style="text-align: center">
+                <ul class="pagination centered" style="display: inline-block"
+                    th:with="start=${T(Math).floor(joinClubList.number/10)*10 + 1},
+                    last=(${start + 9 < joinClubList.totalPages ? start + 9 : joinClubList.totalPages})">
+                    <li style="float: left" class="page-item">
+                        <a class="page-link" th:href="@{/joins(page=1)}" aria-label="First">
+                            <span aria-hidden="true">First</span>
+                        </a>
+                    </li>
+
+                    <li style="float: left" th:class="${joinClubList.first} ? 'page-item'">
+                        <a class="page-link" th:href="${joinClubList.first} ? '#' :@{/joins(page=${joinClubList.number})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <li style="float: left" th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == joinClubList.number + 1} ? 'page-item'">
+                        <a class="page-link" th:text="${page}" th:href="@{/joins?(page=${page})}"></a>
+                    </li>
+
+                    <li style="float: left" th:class="${joinClubList.last} ? 'page-item'">
+                        <a class="page-link" th:href="${joinClubList.last} ? '#' : @{/joins(page=${joinClubList.number + 2})}" aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <li style="float: left" class="page-item">
+                        <a class="page-link" th:href="@{/joins(page=${joinClubList.totalPages})}" aria-label="Last">
+                            <span aria-hidden="true">Last</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div> <!-- /container -->
+<div class="container-fluid" th:unless="${getJoinClubList.size()}!=0">
+    <div class="row">
+        <div th:replace="fragments/sidebar :: sidebar"/>
+        <div class="col-md-10">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>회원명</th>
+                    <th>동아리 이름</th>
+                    <th>동아리 신청상태</th>
+                    <th>신청 취소</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th colspan="5" style="text-align: center">신청내역이 없습니다!</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+<script>
+    function cancel(id) {
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/joins/" + id + "/cancel");
+        document.body.appendChild(form);
+        form.submit();
+    }</script>
+</html>

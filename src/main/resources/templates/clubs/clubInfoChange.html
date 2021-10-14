@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div th:replace="fragments/navbar :: navbar"/>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragments/sidebar :: sidebar"/>
+        <div class="col-md-10">
+            <form th:action="@{'/clubs/'+${clubId}+'/change'}" th:object="${clubForm}" method="post">
+                <div class="form-group">
+                    <label th:for="name">동아리명</label>
+                    <input type="text" th:field="*{name}" class="form-control"placeholder="이름을 입력하세요"
+                           th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
+                    <p class="ErrorMessage" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
+                    <p class="ErrorMessage" th:name="${message}" th:if="${message}!=null" th:text="${message}"/>
+                    <!--                    동아리 중복체크해서 메세지가 있으면 중복된 동아리명이 있으므로 출력-->
+                </div>
+                <div class="form-group">
+                    <label th:for="price">총인원수</label>
+                    <input type="number" th:field="*{totalNumber}" class="form-control"placeholder="인원을 입력하세요"
+                           th:class="${#fields.hasErrors('totalNumber')}? 'form-control fieldError' : 'form-control'">
+                    <p class="ErrorMessage" th:if="${#fields.hasErrors('totalNumber')}" th:errors="*{totalNumber}">Incorrect date</p>
+                </div>
+                <div class="form-group">
+                    <label for="member">동아리장</label>
+                    <select name="memberId" id="member" class="form-control">
+                        <option th:each="member : ${members}"
+                                th:value="${member.id}"
+                                th:text="${member.name}"/>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">수정</button>
+            </form>
+        </div>
+    </div>
+
+</div> <!-- /container -->
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

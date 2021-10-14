@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div th:replace="fragments/navbar :: navbar" />
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragments/sidebar :: sidebar"/>
+            <div class="container col-md-10">
+                <div>
+                    <table class="table table-striped" th:each="event : ${eventId}">
+                        <thead>
+                        <tr>
+                            <th th:text="${eventId.id}+'번게시물'" colspan="2"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="제목"></td>
+                            <td th:text="${eventId.title}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="작성일자"></td>
+                            <td th:text="${eventId.writeDate}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="내용"></td>
+                            <td><a th:text="${eventId.content}" /></td>
+                        </tr>
+                        <td colspan="2">
+                            <a href="" th:href="@{'/eventBoard/updateEdit/'+${eventId.id}}" class="btn btn-primary" style="float: right">수정</a>
+                        </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div> <!-- /container -->
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

@@ -1,0 +1,53 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+.container-fluid{
+    height: 80%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.container-fluid::-webkit-scrollbar {
+    display: none;
+}
+/*id가 board인 태그의 thread 안에 속해있는 tr 안에 th태그*/
+#board thead tr th{
+    text-align: center;/*글자 중앙정렬*/
+}
+/*id가 board인 태그의 tbody 안에 속해있는 tr속 td태그*/
+#board tbody tr td{
+    text-align: center;/*글자 중앙정렬*/
+}
+/*id가 board인 태그의 tr 태그에 속해있는 th의 자식태그*/
+#board tr th:nth-child(1){
+    width:10%;/*가로 크기 10%,게시글 번호*/
+}
+#board tr th:nth-child(2){
+    width:50%;/*가로 크기 50%,게시글 내용*/
+}
+#board tr th:nth-child(3){
+    width:20%;/*가로 크기 20%,게시글 작성자,작성 날짜*/
+}
+#board tr th:nth-child(4){
+    width:20%;/*가로 크기 20%,게시글 작성,게시글 삭제버튼*/
+}
+
+/*Notice_Board_View CSS*/
+
+/*id가 viewBoard인 thead에속해있는 tr속 th태그*/
+#viewBoard thead tr th{
+    text-align: center;/*글자 중앙정렬*/
+}
+/*id가 viewBoard인 태그 안에 tr속 첫번째 td태그*/
+#viewBoard tr td:nth-child(1){
+    text-align: center;/*글자 중앙정렬*/
+}
+/*id가 viewBoard인 태그 안에 tr속 두번째 td태그*/
+#viewBoard tr td:nth-child(2){
+    word-break:break-all;/*문자 줄바꿈*/
+}
+/*Error Message Text Color*/
+.ErrorMessage{
+    color: red;
+}

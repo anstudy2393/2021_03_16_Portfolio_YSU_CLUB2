@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">YSU_CLUB</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbar">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/">대시보드</a>
+                <a class="nav-item nav-link" href="/noticeBoard/list">공지사항</a>
+                <a class="nav-item nav-link" href="/eventBoard/list">이벤트</a>
+                <a class="nav-item nav-link" href="/">회원</a>
+            </div>
+            <div class="navbar-nav mr-sm-2">
+                <a class="nav-item nav-link" href="/navbar/userLogin">로그인</a>
+                <a class="nav-item nav-link" href="/navbar/userEdit">관리자 정보 수정</a>
+            </div>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div class="col-md-2" th:fragment="sidebar" style="margin-top: 10px">
+  <!-- 사이드 바 메뉴-->
+  <!-- 패널 타이틀1 -->
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title">생성기능</h3>
+    </div>
+    <!-- 사이드바 메뉴목록1 -->
+    <ul class="list-group">
+      <li class="list-group-item"><a href="/members/new">회원</a></li>
+      <li class="list-group-item"><a href="/clubs/new">동아리</a></li>
+      <li class="list-group-item"><a href="/join">동아리신청</a></li>
+    </ul>
+  </div>
+  <!-- 패널 타이틀2 -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">조회</h3>
+    </div>
+    <!-- 사이드바 메뉴목록2 -->
+    <ul class="list-group">
+      <li class="list-group-item"><a href="/members">회원</a></li>
+      <li class="list-group-item"><a href="/clubs">동아리</a></li>
+      <li class="list-group-item"><a href="/joins">동아리신청목록</a></li>
+    </ul>
+  </div>
+  <!-- 패널 타이틀3 -->
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title">공지사항</h3>
+    </div>
+    <!-- 사이드바 메뉴목록3 -->
+    <ul class="list-group">
+      <li class="list-group-item"><a href="/noticeBoard/write">작성</a></li>
+      <li class="list-group-item"><a href="/noticeBoard/list">목록</a></li>
+    </ul>
+  </div>
+  <!-- 패널 타이틀4 -->
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title">이벤트</h3>
+    </div>
+    <!-- 사이드바 메뉴목록4 -->
+    <ul class="list-group">
+      <li class="list-group-item"><a href="/eventBoard/write">작성</a></li>
+      <li class="list-group-item"><a href="/eventBoard/list">목록</a></li>
+    </ul>
+  </div>
+</div>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div th:replace="fragments/navbar :: navbar"/>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragments/sidebar :: sidebar"/>
+            <div class="col-md-10" th:if="${getMemberList.size()}!=0">
+                <div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>이름</th>
+                            <th>학번</th>
+                            <th>학과</th>
+                            <th>지역</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="member : ${memberList}">
+                            <td th:text="${member.id}"></td>
+                            <td th:text="${member.name}"></td>
+                            <td th:text="${member.address?.classNumber}"></td>
+                            <td th:text="${member.address?.department}"></td>
+                            <td th:text="${member.address?.location}"></td>
+                            <td>
+                                <a href="#" th:href="@{/members/{id}/edit (id=${member.id})}"
+                                   class="btn btn-primary" role="button">수정</a>
+                            </td>
+                            <td>
+                                <form th:action="@{'/members/'+${member.id}}" th:method="delete">
+                                    <button type="submit" class="btn btn-block btn-outline-warning">
+                                        삭제
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav style="text-align: center">
+                        <ul class="pagination centered" style="display: inline-block"
+                            th:with="start=${T(Math).floor(memberList.number/10)*10 + 1},
+                                        last=(${start + 9 < memberList.totalPages ? start + 9 : memberList.totalPages})">
+                            <li style="float: left" class="page-item">
+                                <a class="page-link" th:href="@{/members(page=1)}" aria-label="First">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+
+                            <li style="float: left" th:class="${memberList.first} ? 'page-item'">
+                                <a class="page-link" th:href="${memberList.first} ? '#' :@{/members(page=${memberList.number})}" aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+
+                            <li style="float: left" th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == memberList.number + 1} ? 'page-item'">
+                                <a class="page-link" th:text="${page}" th:href="@{/members(page=${page})}"></a>
+                            </li>
+
+                            <li style="float: left" th:class="${memberList.last} ? 'page-item'">
+                                <a class="page-link" th:href="${memberList.last} ? '#' : @{/members(page=${memberList.number + 2})}" aria-label="Next">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+
+                            <li style="float: left" class="page-item">
+                                <a class="page-link" th:href="@{/members(page=${memberList.totalPages})}" aria-label="Last">
+                                    <span aria-hidden="true">Last</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="container col-md-10" th:unless="${getMemberList.size()}!=0"><!--데이터가 없을경우-->
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>이름</th>
+                        <th>학번</th>
+                        <th>학과</th>
+                        <th>지역</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th colspan="5" style="text-align: center">등록된 회원이 없습니다!</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

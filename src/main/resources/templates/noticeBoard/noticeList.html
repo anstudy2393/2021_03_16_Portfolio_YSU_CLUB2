@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div th:replace="fragments/navbar :: navbar" />
+
+
+<div class="container-fluid ">
+    <div class="row">
+        <div th:replace="fragments/sidebar :: sidebar"/>
+            <div class="container col-md-10" th:if="${getBoardList.size()}!=0">
+                <div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th >#</th>
+                            <th>제목</th>
+                            <th>작성날짜</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="notice : ${noticeList}">
+                            <td th:text="${notice.id}"></td>
+                            <td><a th:text="${notice.title}" href="" th:href="@{'/noticeBoard/view/'+${notice.id}}"/></td>
+                            <td th:text="${notice.writeDate}"></td>
+                            <td>
+                                <a href="" th:href="@{'/noticeBoard/cancel/'+${notice.id}}" class="btn btn-danger" th:onclick="return confirm('게시글을 삭제하시겠습니까?')">삭제</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav style="text-align: center">
+                        <ul class="pagination centered" style="display: inline-block"
+                            th:with="start=${T(Math).floor(noticeList.number/10)*10 + 1},
+                                last=(${start + 9 < noticeList.totalPages ? start + 9 : noticeList.totalPages})">
+                            <li style="float: left" class="page-item">
+                                <a class="page-link" th:href="@{/noticeBoard/list(page=1)}" aria-label="First">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+
+                            <li style="float: left" th:class="${noticeList.first} ? 'page-item'">
+                                <a class="page-link" th:href="${noticeList.first} ? '#' :@{/noticeBoard/list(page=${noticeList.number})}" aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+
+                            <li style="float: left" th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == noticeList.number + 1} ? 'page-item'">
+                                <a class="page-link" th:text="${page}" th:href="@{/noticeBoard/list?(page=${page})}"></a>
+                            </li>
+
+
+                            <li style="float: left" th:class="${noticeList.last} ? 'page-item'">
+                                <a class="page-link" th:href="${noticeList.last} ? '#' : @{/noticeBoard/list(page=${noticeList.number + 2})}" aria-label="Next">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+
+                            <li style="float: left" class="page-item">
+                                <a class="page-link" th:href="@{/noticeBoard/list(page=${noticeList.totalPages})}" aria-label="Last">
+                                    <span aria-hidden="true">Last</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div> <!-- /container -->
+
+            <div class="container col-md-10" th:unless="${getBoardList.size()}!=0"><!--데이터가 없을경우-->
+                <table class="table table-striped" id="board">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>제목</th>
+                        <th>작성날짜</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th colspan="3" style="text-align: center">등록된 공지사항이 없습니다!</th>
+                        <th><button class="btn btn-success" data-toggle="modal" data-target="#modal" onclick = "location.href = '/noticeBoard/write'">공지사항 추가</button></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

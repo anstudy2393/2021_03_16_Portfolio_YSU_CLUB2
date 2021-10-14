@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div th:replace="fragments/navbar :: navbar"/>
+<div class="container-fluid" th:if="${getClubList.size()}!=0">
+    <div class="row">
+        <div th:replace="fragments/sidebar :: sidebar"/>
+        <div class="col-md-10">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>동아리명</th>
+                    <th>남은 가입가능인원수</th>
+                    <th>동아리 회장</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody> <tr th:each="club : ${clubList}">
+                    <td th:text="${club.id}"></td>
+                    <td th:text="${club.name}"></td>
+                    <td th:text="${club.totalNumber}"></td>
+                    <td th:text="${club.clubJang}"></td>
+                    <td>
+                        <a th:href="'javascript:deleteClub('+${club.id}+')'"
+                           class="btn btn-danger">삭제</a>
+                    </td>
+                    <td>
+                        <a th:href="'javascript:changeClub('+${club.id}+')'"
+                           class="btn btn-primary">수정</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <nav style="text-align: center">
+                <ul class="pagination centered" style="display: inline-block"
+                    th:with="start=${T(Math).floor(clubList.number/10)*10 + 1},
+                    last=(${start + 9 < clubList.totalPages ? start + 9 : clubList.totalPages})">
+                    <li style="float: left" class="page-item">
+                        <a class="page-link" th:href="@{/clubs(page=1)}" aria-label="First">
+                            <span aria-hidden="true">First</span>
+                        </a>
+                    </li>
+
+                    <li style="float: left" th:class="${clubList.first} ? 'page-item'">
+                        <a class="page-link" th:href="${clubList.first} ? '#' :@{/clubs(page=${clubList.number})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <li style="float: left" th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == clubList.number + 1} ? 'page-item'">
+                        <a class="page-link" th:text="${page}" th:href="@{/clubs?(page=${page})}"></a>
+                    </li>
+
+                    <li style="float: left" th:class="${clubList.last} ? 'page-item'">
+                        <a class="page-link" th:href="${clubList.last} ? '#' : @{/clubs(page=${clubList.number + 2})}" aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <li style="float: left" class="page-item">
+                        <a class="page-link" th:href="@{/clubs(page=${clubList.totalPages})}" aria-label="Last">
+                            <span aria-hidden="true">Last</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div> <!-- /container -->
+<div class="container-fluid" th:unless="${getClubList.size()}!=0"><!--데이터가 없을경우-->
+    <div class="row">
+        <div th:replace="fragments/sidebar :: sidebar"/>
+        <div class="col-md-10">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>동아리명</th>
+                    <th>남은 가입가능인원수</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th colspan="4" style="text-align: center">등록된 동아리가 없습니다!</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+<script>
+    function deleteClub(id) {
+        if(confirm(id+"번 동아리를 삭제하시겠습니까?")){
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "/clubs/" + id + "/delete");
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+    }
+    function changeClub(id) {
+            var form = document.createElement("form");
+            form.setAttribute("method", "get");
+            form.setAttribute("action", "/clubs/" +id+ "/change");
+            document.body.appendChild(form);
+            form.submit();
+    }
+
+
+</script>
+</html>
