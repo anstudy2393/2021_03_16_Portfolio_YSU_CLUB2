@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"/>
-
 <body>
 <div th:replace="fragments/navbar :: navbar"/>
 
@@ -10,7 +9,20 @@
         <div th:replace="fragments/sidebar :: sidebar"/>
         <div class="container col-md-10" style="padding: 10px">
             <div class="jumbotron" style="margin:0;padding:10px">
-                <h1>코로나 리스트</h1>
+                <h1>COVID-19 전국 코로나 현황</h1>
+                <select id="slt" onchange="categoryChange(this)">
+                    <option>확진자/사망자 현황</option>
+                    <option value="today">today 확진자 현황</option>
+                    <option value="ok">확진자 현황</option>
+                    <option value="dead">사망자 현황</option>
+                </select>
+
+                <select id="loc" onchange="imgChange(this)">
+
+                </select>
+                <span><a href="./img/korean_covid.html" target="_blank">COVID-19 전국 코로나 현황(지도)</a></span>
+                <br>
+                <img width="70%" style="display:none" id="get_img">
             </div>
             <br/>
         </div> <!-- /container -->
@@ -18,5 +30,131 @@
 </div>
 
 <div th:replace="fragments/footer :: footer"/>
+<script>
+    //=====select box설정=====//
+    function categoryChange(e) {
+        var korea_loc = ['지역을 선택해 주세요','제주','경남','경북','전남','전북','충남','충북','강원','경기','세종','울산','대전','광주','인천','대구','부산','서울'];
+        var korea_loc2 = ['유형을 선택해 주세요','막대그래프','원그래프']
+        var target = document.getElementById("loc");
+
+        if(e.value == "ok"||e.value == "dead"){
+            var d = korea_loc;
+        }else if(e.value == "today"){
+            var d = korea_loc2;
+        }
+
+        target.options.length = 0;
+
+        for (x in d) {
+            var options = document.createElement("option");
+            console.log(x);
+            options.value = d[x];
+            options.innerHTML = d[x];
+            target.appendChild(options);
+        }
+    }
+    //=====이미지 변경=====//
+    function imgChange(e){
+        //=====첫번째 select value값 가져오기=====//
+        var slt = document.getElementById("slt");
+        slt = slt.options[slt.selectedIndex].value;
+        //=====두번째 select값 가져오기=====//
+        var text = document.getElementById("loc");
+        text = text.options[text.selectedIndex].text;
+        //=====img id가져옴=====//
+        var img = document.getElementById("get_img");
+
+        //alert(text+" "+slt);//값 출력 테스트
+
+        if(slt=="dead"){// 사망자 현황
+            img.style.display="none";//태그 선택시 display="none"해제
+            if(text=="제주"){
+                img.style.display="block";img.src="./img/df_Jeju_group_death.png";//이미지 변경
+            }else if(text == "경남"){
+                img.style.display="block";img.src="./img/df_Gyeongnam_group_death.png";//이미지 변경
+            }else if(text == "경북"){
+                img.style.display="block";img.src="./img/df_Gyeongbuk_group_death.png";//이미지 변경
+            }else if(text == "전남"){
+                img.style.display="block";img.src="./img/df_Jeonnam_group_death.png";//이미지 변경
+            }else if(text == "전북"){
+                img.style.display="block";img.src="./img/df_Jeonbuk_group_death.png";//이미지 변경
+            }else if(text == "충남"){
+                img.style.display="block";img.src="./img/df_Chungnam_group_death.png";//이미지 변경
+            }else if(text == "충북"){
+                img.style.display="block";img.src="./img/df_Chungbuk_group_death.png";//이미지 변경
+            }else if(text == "강원"){
+                img.style.display="block";img.src="./img/df_Gangwon_group_death.png";//이미지 변경
+            }else if(text == "경기"){
+                img.style.display="block";img.src="./img/df_Gyeonggi_group_death.png";//이미지 변경
+            }else if(text == "세종"){
+                img.style.display="block";img.src="./img/df_Sejong_group_death.png";//이미지 변경
+            }else if(text == "울산"){
+                img.style.display="block";img.src="./img/df_Ulsan_group_death.png";//이미지 변경
+            }else if(text == "대전"){
+                img.style.display="block";img.src="./img/df_Daejeon_group_death.png";//이미지 변경
+            }else if(text == "광주"){
+                img.style.display="block";img.src="./img/df_Gwangju_group_death.png";//이미지 변경
+            }else if(text == "인천"){
+                img.style.display="block";img.src="./img/df_Incheon_group_death.png";//이미지 변경
+            }else if(text == "대구"){
+                img.style.display="block";img.src="./img/df_Daegu_group_death.png";//이미지 변경
+            }else if(text == "부산"){
+                img.style.display="block";img.src="./img/df_Busan_group_death.png";//이미지 변경
+            }else if(text == "서울"){
+                img.style.display="block";img.src="./img/df_Seoul_group_death.png";//이미지 변경
+            }else{
+                img.style.display="none";//태그 선택시 display="none"해제
+            }
+        }else if(slt=="ok"){//확진자 현황
+            img.style.display="none";//태그 선택시 display="none"해제
+            if(text=="제주"){
+                img.style.display="block";img.src="./img/df_Jeju_group_check.png";//이미지 변경
+            }else if(text == "경남"){
+                img.style.display="block";img.src="./img/df_Gyeongnam_group_check.png";//이미지 변경
+            }else if(text == "경북"){
+                img.style.display="block";img.src="./img/df_Gyeongbuk_group_check.png";//이미지 변경
+            }else if(text == "전남"){
+                img.style.display="block";img.src="./img/df_Jeonnam_group_check.png";//이미지 변경
+            }else if(text == "전북"){
+                img.style.display="block";img.src="./img/df_Jeonbuk_group_check.png";//이미지 변경
+            }else if(text == "충남"){
+                img.style.display="block";img.src="./img/df_Chungnam_group_check.png";//이미지 변경
+            }else if(text == "충북"){
+                img.style.display="block";img.src="./img/df_Chungbuk_group_check.png";//이미지 변경
+            }else if(text == "강원"){
+                img.style.display="block";img.src="./img/df_Gangwon_group_check.png";//이미지 변경
+            }else if(text == "경기"){
+                img.style.display="block";img.src="./img/df_Gyeonggi_group_check.png";//이미지 변경
+            }else if(text == "세종"){
+                img.style.display="block";img.src="./img/df_Sejong_group_check.png";//이미지 변경
+            }else if(text == "울산"){
+                img.style.display="block";img.src="./img/df_Ulsan_group_check.png";//이미지 변경
+            }else if(text == "대전"){
+                img.style.display="block";img.src="./img/df_Daejeon_group_check.png";//이미지 변경
+            }else if(text == "광주"){
+                img.style.display="block";img.src="./img/df_Gwangju_group_check.png";//이미지 변경
+            }else if(text == "인천"){
+                img.style.display="block";img.src="./img/df_Incheon_group_check.png";//이미지 변경
+            }else if(text == "대구"){
+                img.style.display="block";img.src="./img/df_Daegu_group_check.png";//이미지 변경
+            }else if(text == "부산"){
+                img.style.display="block";img.src="./img/df_Busan_group_check.png";//이미지 변경
+            }else if(text == "서울"){
+                img.style.display="block";img.src="./img/df_Seoul_group_check.png";//이미지 변경
+            }else{
+                img.style.display="none";//태그 선택시 display="none"해제
+            }
+        }else if(slt=="today"){
+            img.style.display="none";//태그 선택시 display="none"해제
+            if(text == "막대그래프"){
+                img.style.display="block";img.src="./img/today_bar.png";//이미지 변경
+            }else if(text == "원그래프"){
+                img.style.display="block";img.src="./img/today_pie.png";//이미지 변경
+            }else{
+                img.style.display="none";//태그 선택시 display="none"해제
+            }
+        }
+    }
+</script>
 </body>
 </html>

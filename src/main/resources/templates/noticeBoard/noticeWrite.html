@@ -28,7 +28,7 @@
                                   th:class="${#fields.hasErrors('content')}? 'form-control fieldError' : 'form-control'"></textarea>
                         <p class="ErrorMessage" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Incorrect date</p>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">공지 작성</button>
                 </form>
             </div>
             <br/>

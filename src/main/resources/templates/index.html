@@ -1,141 +1,156 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <head th:replace="fragments/header :: header"/>
-  </head>
-  <body>
-  <div th:replace="fragments/navbar :: navbar"/>
+</head>
+<style>
+    /* a태그 글자색 */
+    a {
+        color: black;
+    }
+</style>
+<body>
+<div th:replace="fragments/navbar :: navbar"/>
 
-    <div class="container p-3">
-      <div class="container p-3 bg-dark text-white">
+<div class="container p-3">
+    <div class="container p-3 bg-dark text-white">
         <div class="row">
-          <div class="col-sm-9 info">
-            <h4><img src="./img/setting.svg"> </span>YSU_CLUB<small> 동아리를 관리하세요.</small></h4>
-          </div>
+            <div class="col-sm-9 info">
+                <h4><img src="./img/setting.svg"> </span>YSU_CLUB<small> 동아리를 관리하세요.</small></h4>
+            </div>
         </div>
-      </div>
-      <ol class="breadcrumb">
-        <li class="active"><b>COVID-19 전국 코로나 현황</b></li>
-      </ol>
     </div>
+    <ol class="breadcrumb">
+        <li class="active"><b><a href="/covid">COVID-19 전국 코로나 현황</a></b></li>
+    </ol>
+</div>
 
-    <section id="main">
-      <div class="container">
+<section id="main">
+    <div class="container">
         <div class="row">
-          <div class="col-md-3">
-            <div class="list-group">
-              <a href="/" class="list-group-item active">메인</a>
-              <a href="/members" class="list-group-item">회원 관리 </a>
-              <a href="/clubs" class="list-group-item">동아리 관리 </a>
-              <a href="/joins" class="list-group-item">동아리신청 관리</a>
-              <a class="list-group-item" href="/noticeBoard/write">공지 작성</a>
-              <a class="list-group-item" href="/noticeBoard/list">공지 게시판</a>
-              <a class="list-group-item" href="/eventBoard/write">이벤트 작성</a>
-              <a class="list-group-item" href="/eventBoard/list">이벤트 게시판</a>
-              <a class="list-group-item" href="/covid">전국 코로나 현황</a>
-            </div>
-            <div class="p-2 my-2">
-              <div class="card text-center pt-2 bg-light">
-                <h5 class="pt-2 pb-2">외부 사이트</h5>
-                <ul class="list-group">
-                  <li class="list-group-item"><a href="https://www.naver.com/">네이버</a></li>
-                  <li class="list-group-item"><a href="https://www.youtube.com/">유튜브</a></li>
-                  <li class="list-group-item"><a href="https://www.facebook.com/">페이스북</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <!--관련 페이지-->
-          <div class="col-md-9">
-            <div class="list-group">
-              <a href="/" class="list-group-item active">관리 페이지 둘러보기</a>
-              <div class="list-group-item">
-                <div class="row m-1">
-                  <div class="col-md-3 text-center bg-light p-3">
-                    <img src="./img/event.svg">
-                    <h3>205</h3>
-                    <h5>이벤트</h5>
-                  </div>
-                <div class="col-md-3 text-center bg-light p-3">
-                    <img src="./img/edit.svg">
-                    <h3>98</h3>
-                    <h5>블로그</h5>
-                  </div>
-                  <div class="col-md-3 text-center bg-light p-3">
-                    <img src="./img/user.svg">
-                    <h3>1053</h3>
-                    <h5>회원</h5>
-                  </div>
-                  <div class="col-md-3 text-center bg-light p-3">
-                    <img src="./img/chart.svg">
-                    <h3>50455</h3>
-                    <h5>방문자</h5>
-                  </div>
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="/" class="list-group-item active">메인</a>
+                    <a href="/members" class="list-group-item">회원 관리 </a>
+                    <a href="/clubs" class="list-group-item">동아리 관리 </a>
+                    <a href="/joins" class="list-group-item">동아리신청 관리</a>
+                    <a class="list-group-item" href="/noticeBoard/write">공지 작성</a>
+                    <a class="list-group-item" href="/noticeBoard/list">공지 게시판</a>
+                    <a class="list-group-item" href="/eventBoard/write">이벤트 작성</a>
+                    <a class="list-group-item" href="/eventBoard/list">이벤트 게시판</a>
+                    <a class="list-group-item" href="/covid">전국 코로나 현황</a>
                 </div>
-              </div>
-
-              <!--main 공지사항-->
-                <a href="/" class="list-group-item active" style="float: left">공지사항</a>
-                <div class="list-group-item">
-
-                <div class="list-group" th:if="${findTop3.size()}!=0">
-                  <table class="table">
-                    <thead>
-                    <tr>
-                      <th class="mobile" scope="col">번호</th>
-                      <th scope="col">제목</th>
-                      <th class="mobile" scope="col">작성자</th>
-                      <th class="mobile" scope="col">작성일</th>
-                    </tr>
-
-                    </thead>
-                    <tbody>
-
-                    <tr th:each="findTop : ${findTop3}">
-                      <td th:text="${findTop.id}"></td>
-                      <td><a th:text="${findTop.title}" href="" th:href="@{'/noticeBoard/view/'+${findTop.id}}"/></td>
-                      <td th:text="${findTop.name}"></td>
-                      <td th:text="${findTop.writeDate}"></td>
-
-                    </tr>
-                    </tbody>
-                    <tr>
-                      <td colspan="4" style="text-align: right"><button class="btn btn-success" data-toggle="modal" data-target="#modal" onclick = "location.href = '/noticeBoard/write'">공지사항 추가</button></td>
-
-                    </tr>
-                  </table>
+                <div class="p-2 my-2">
+                    <div class="card text-center pt-2 bg-light">
+                        <h5 class="pt-2 pb-2">외부 사이트</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="https://www.naver.com/">네이버</a></li>
+                            <li class="list-group-item"><a href="https://www.youtube.com/">유튜브</a></li>
+                            <li class="list-group-item"><a href="https://www.facebook.com/">페이스북</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="list-group" th:unless="${findTop3.size()}!=0">
-                  <table class="table">
-                   <thead>
-                    <tr>
-
-                      <th class="mobile" scope="col">번호</th>
-                      <th scope="col">제목</th>
-                      <th class="mobile" scope="col">작성자</th>
-                      <th class="mobile" scope="col">작성일</th>
-
-                    </tr>
-                   </thead>
-                    <tbody>
-                    <tr>
-
-                      <td colspan="4" style="text-align: center">등록된 공지사항이 없습니다!</td>
-
-                    </tr>
-                    </tbody>
-                    <tr>
-                      <td colspan="4" style="text-align: right"><button class="btn btn-success" data-toggle="modal" data-target="#modal" onclick = "location.href = '/noticeBoard/write'">공지사항 추가</button></td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
             </div>
-          </div>
+            <!--관련 페이지-->
+            <div class="col-md-9">
+                <div class="list-group">
+                    <a href="/" class="list-group-item active">관리 페이지 둘러보기</a>
+                    <div class="list-group-item">
+                        <div class="row m-1">
+                            <div class="col-md-3 text-center bg-light p-3">
+                                <img src="./img/edit.svg">
+                                <h3></h3>
+                                <h5><a href="/noticeBoard/list">공지사항</a></h5>
+                            </div>
+                            <div class="col-md-3 text-center bg-light p-3">
+                                <img src="./img/event.svg">
+                                <h3></h3>
+                                <h5><a href="/eventBoard/list">이벤트</a></h5>
+                            </div>
+                            <div class="col-md-3 text-center bg-light p-3">
+                                <img src="./img/user.svg">
+                                <h3></h3>
+                                <h5><a href="/members">회원</a></h5>
+                            </div>
+                            <div class="col-md-3 text-center bg-light p-3">
+                                <img src="./img/chart.svg">
+                                <h3></h3>
+                                <h5><a href="/covid">COVID-19</a></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--main 공지사항-->
+                    <a href="/" class="list-group-item active" style="float: left">공지사항</a>
+                    <div class="list-group-item">
+
+                        <div class="list-group" th:if="${findTop3.size()}!=0">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="mobile" scope="col">번호</th>
+                                    <th scope="col">제목</th>
+                                    <th class="mobile" scope="col">작성자</th>
+                                    <th class="mobile" scope="col">작성일</th>
+                                </tr>
+
+                                </thead>
+                                <tbody>
+
+                                <tr th:each="findTop : ${findTop3}">
+                                    <td th:text="${findTop.id}"></td>
+                                    <td><a th:text="${findTop.title}" href=""
+                                           th:href="@{'/noticeBoard/view/'+${findTop.id}}"/></td>
+                                    <td th:text="${findTop.name}"></td>
+                                    <td th:text="${findTop.writeDate}"></td>
+
+                                </tr>
+                                </tbody>
+                                <tr>
+                                    <td colspan="4" style="text-align: right">
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#modal"
+                                                onclick="location.href = '/noticeBoard/write'">공지사항 추가
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="list-group" th:unless="${findTop3.size()}!=0">
+                            <table class="table">
+                                <thead>
+                                <tr>
+
+                                    <th class="mobile" scope="col">번호</th>
+                                    <th scope="col">제목</th>
+                                    <th class="mobile" scope="col">작성자</th>
+                                    <th class="mobile" scope="col">작성일</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+
+                                    <td colspan="4" style="text-align: center">등록된 공지사항이 없습니다!</td>
+
+                                </tr>
+                                </tbody>
+                                <tr>
+                                    <td colspan="4" style="text-align: right">
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#modal"
+                                                onclick="location.href = '/noticeBoard/write'">공지사항 추가
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
-      </div>
-    </section>
-    <div th:replace="fragments/footer :: footer"/>
-  </body>
+    </div>
+</section>
+<div th:replace="fragments/footer :: footer"/>
+</body>
 </html>
